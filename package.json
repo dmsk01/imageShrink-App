@@ -20,6 +20,7 @@
     "electron": "^10.1.5"
   },
   "dependencies": {
+    "electron-log": "^4.3.0",
     "imagemin": "^7.0.1",
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-pngquant": "^9.0.1",

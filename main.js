@@ -6,8 +6,9 @@ const imagemin = require("imagemin");
 const imageminMozjpeg = require("imagemin-mozjpeg");
 const imageminPngquant = require("imagemin-pngquant");
 const slash = require("slash");
+const log = require("electron-log");
 
-process.env.NODE_ENV = "development";
+process.env.NODE_ENV = "production";
 
 const isDev = process.env.NODE_ENV !== "production" ? true : false;
 const isWin = process.platform === "win32" ? true : false;
@@ -120,10 +121,12 @@ async function shrinkImage({ imgPath, quality, dest }) {
       destination: dest,
       plugins: [imageminMozjpeg({ quality }), imageminPngquant({ quality: [pngQuality, pngQuality] })],
     });
-    console.log(files);
+    log.info(files);
     shell.openPath(dest);
-  } catch (error) {
-    console.log(error);
+
+    mainWindow.webContents.send("image:done");
+  } catch (err) {
+    log.error(err);
   }
 }
 
